@@ -29,5 +29,5 @@ brew install waon
 (have one copy of this running for each pi)
 
 * subscribe to `pi#/queue`
-* read through one line at a time, send note, wait time, repeat
+* read through one line at a time, send note (`pi#/note`), wait time, repeat
 unless interrupted by updated queue
