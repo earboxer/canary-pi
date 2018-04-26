@@ -1,0 +1,1 @@
+arecord --device=hw:1,0 --format S16_LE --rate 44100 -c1 test.wav
