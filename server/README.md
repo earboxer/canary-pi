@@ -6,6 +6,8 @@
 brew install mosquitto
 brew services start mosquitto
 brew install waon
+sudo easy_install pip
+sudo pip install paho-mqtt
 ```
 
 ## Pseudocode
