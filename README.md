@@ -39,7 +39,20 @@ Go to system preferences, sharing, enable remote login, allow access for All Use
 
 ## Client
 
+```sh
+sudo pip install paho-mqtt
+```
 
+```sh
+ssh-keygen
+ssh-copy-id serveraddress
+```
+
+to run
+
+```sh
+python client.py pi1 serveraddress
+```
 
 # Server Pseudocode
 
