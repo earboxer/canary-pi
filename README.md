@@ -43,9 +43,11 @@ Go to system preferences, sharing, enable remote login, allow access for All Use
 sudo pip install paho-mqtt
 ```
 
+As the user who will be running the script, do
+
 ```sh
 ssh-keygen
-ssh-copy-id serveraddress
+ssh-copy-id pi@serveraddress
 ```
 
 to run
