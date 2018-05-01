@@ -2,8 +2,9 @@
 import paho.mqtt.client as mqtt
 import os
 import time
+import sys
 
-BROKER = "???"
+BROKER = sys.argv[2]
 PORT = 1883
 QOS = 0
 
@@ -15,7 +16,7 @@ def on_connect(client, userdata, rc, *extra_params):
     print('Connected with result code='+str(rc))
 # Callback when client receives a PUBLISH message from the broker
 def on_message(client, data, msg):
-    if msg.topic == "pi1":
+    if msg.topic == sys.argv[1]:
         print("Received message: Note = ", int(msg.payload))
         os.system('sonic_pi play ' + int(msg.payload))
 
@@ -25,14 +26,14 @@ client.on_message = on_message
 client.on_publish = on_publish
 
 client.connect(BROKER, PORT, 60)
-client.subscribe("pi1", qos=QOS)
+client.subscribe(sys.argv[1], qos=QOS)
 client.loop_start()
 
 try:
     while True:
         # add a duration or stop this at some point
         os.system('arecord --device=hw:1,0 --format S16_LE --rate 44100 -c1 test.wav')
-        client.publish("pi1/newfile", './test.wav')
+        client.publish(sys.argv[1] + "/newfile", './test.wav')
         time.sleep(3)
 except KeyboardInterrupt:
     print('Done')
