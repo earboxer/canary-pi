@@ -32,8 +32,10 @@ client.loop_start()
 try:
     while True:
         # add a duration or stop this at some point
+	wavname = sys.argv[1] + '.wav'
         os.system('arecord --device=hw:1,0 --format S16_LE --rate 44100 -c1 test.wav')
-        client.publish(sys.argv[1] + "/newfile", './test.wav')
+	os.system('scp test.wav ' + sys.argv[2] + ':~/' + wavname)
+        client.publish(sys.argv[1] + "/newfile", wavname)
         time.sleep(3)
 except KeyboardInterrupt:
     print('Done')
