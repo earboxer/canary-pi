@@ -12,6 +12,7 @@ brew services start mosquitto
 brew install waon
 sudo easy_install pip
 sudo pip install paho-mqtt
+sudo pip install git+https://github.com/vishnubob/python-midi
 ```
 
 Create user account for pis
