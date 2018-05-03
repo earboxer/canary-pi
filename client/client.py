@@ -33,7 +33,7 @@ try:
     while True:
     # add a duration or stop this at some point
 	wavname = sys.argv[1] + '.wav'
-        os.system('arecord --device=hw:1,0 --format S16_LE --rate 44100 -c1 -d 10 test.wav')
+        os.system('arecord --device=hw:1,0 --format S16_LE --rate 48000 -c1 -d 5 test.wav')
 	os.system('scp test.wav pi@' + sys.argv[2] + ':~/' + wavname)
         client.publish(sys.argv[1] + "/newfile", wavname)
         time.sleep(3)
