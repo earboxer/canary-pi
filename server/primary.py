@@ -13,6 +13,8 @@ def on_message(client, data, msg):
 		print("Received message: File = ", msg.payload)
 	elif msg.topic == "pi2/newfile":
 		print("Received message: File = ", msg.payload)
+	os.system('waon -i ' + msg.payload + ' -o next.mid')
+
 
 client = mqtt.Client()
 client.on_message = on_message
