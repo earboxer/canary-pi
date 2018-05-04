@@ -11,10 +11,23 @@ QOS = 0
 def on_message(client, data, msg):
 	if msg.topic == "pi1/newfile":
 		print("Received message: File = ", msg.payload)
+		print("Converting from .wav to .mid: ")
+		os.system("waon -i ~pi/" + str(msg.payload.decode()) + " -o next.mid")
+		os.system("sh command.sh")
+		file = open("output.txt")
+		note = file.readline()
+		print(note)
+		client.publish(pi1/queue, note)
 	elif msg.topic == "pi2/newfile":
 		print("Received message: File = ", msg.payload)
-	print("Converting from .wav to .mid: ")
-	os.system("waon -i ~pi/" + str(msg.payload.decode()) + " -o next.mid")
+		print("Converting from .wav to .mid: ")
+		os.system("waon -i ~pi/" + str(msg.payload.decode()) + " -o next.mid")
+		os.system("sh command.sh")
+		file = open("output.txt")
+		note = file.readline()
+		print(note)
+		client.publish(pi2/queue, note)
+
 
 
 client = mqtt.Client()

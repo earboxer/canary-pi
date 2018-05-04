@@ -1,1 +1,1 @@
-python mididump.py next.mid | grep NoteOn | grep -o "\[.*," | sed 's/\[//g' | sed 's/,.*//g'
+python mididump.py next.mid | grep NoteOn | grep -o "\[.*," | sed 's/\[//g' | sed 's/,.*//g' > output.txt

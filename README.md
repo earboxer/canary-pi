@@ -37,6 +37,11 @@ sudo passwd pi
 
 Go to system preferences, sharing, enable remote login, allow access for All Users.
 
+To run the server:
+
+```sh
+python primary.py
+```
 
 ## Client
 
