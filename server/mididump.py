@@ -1,3 +1,6 @@
+# Parses the information from a given midi file.
+# Taken from: https://github.com/vishnubob/python-midi
+
 #!/usr/bin/env python
 """
 Print a description of a MIDI file.

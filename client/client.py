@@ -1,3 +1,11 @@
+#####################################
+# client.py contains the client code
+# for CanaryPi.
+#
+# Authors: Zach DeCook and Jesse Kuntz
+# Date: 05/07/18
+#####################################
+
 '''File'''
 import paho.mqtt.client as mqtt
 import os

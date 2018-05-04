@@ -1,3 +1,11 @@
+#####################################
+# primary.py contains the server code
+# for CanaryPi.
+#
+# Authors: Zach DeCook and Jesse Kuntz
+# Date: 05/07/18
+#####################################
+
 '''Primary code section'''
 import paho.mqtt.client as mqtt
 import os
@@ -17,7 +25,7 @@ def on_message(client, data, msg):
 		file = open("output.txt")
 		note = file.readline()
 		print(note)
-		client.publish(pi1/queue, note)
+		client.publish("pi1/queue", note)
 	elif msg.topic == "pi2/newfile":
 		print("Received message: File = ", msg.payload)
 		print("Converting from .wav to .mid: ")
@@ -26,7 +34,7 @@ def on_message(client, data, msg):
 		file = open("output.txt")
 		note = file.readline()
 		print(note)
-		client.publish(pi2/queue, note)
+		client.publish("pi2/queue", note)
 
 
 
