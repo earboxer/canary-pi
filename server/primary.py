@@ -36,8 +36,6 @@ def on_message(client, data, msg):
 		print(note)
 		client.publish("pi2/queue", note)
 
-
-
 client = mqtt.Client()
 client.on_message = on_message
 
