@@ -27,7 +27,8 @@ def on_connect(client, userdata, rc, *extra_params):
 def on_message(client, data, msg):
     if msg.topic == sys.argv[1] + "/queue":
         print("Received message: Note = ", int(msg.payload))
-        os.system('sonic_pi play ' + str(int(msg.payload)))
+        if (int(msg.payload) > 40):
+            os.system('sonic_pi play ' + str(int(msg.payload)), 'sustain: 2')
 
 client = mqtt.Client()
 client.on_connect = on_connect
