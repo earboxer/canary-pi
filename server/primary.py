@@ -10,6 +10,9 @@
 import paho.mqtt.client as mqtt
 import os
 import time
+import sys
+import commands
+
 
 BROKER = "localhost"
 PORT = 1883
@@ -17,30 +20,27 @@ QOS = 0
 
 # Callback when client receives a PUBLISH message from the broker
 def on_message(client, data, msg):
-	if msg.topic == "pi1/newfile":
-		print("Received message: File = ", msg.payload)
-		print("Converting from .wav to .mid: ")
-		os.system("waon -i ~pi/" + str(msg.payload.decode()) + " -o next.mid")
-		os.system("sh command.sh")
-		file = open("output.txt")
-		note = file.readline()
-		os.system( "python module.py pi1 " + note )
-	elif msg.topic == "pi2/newfile":
-		print("Received message: File = ", msg.payload)
-		print("Converting from .wav to .mid: ")
-		os.system("waon -i ~pi/" + str(msg.payload.decode()) + " -o next.mid")
-		os.system("sh command.sh")
-		file = open("output.txt")
-		note = file.readline()
-		os.system( "python module.py pi2 " + note )
+	name = msg.topic[:-len("/newfile")]
+	print("Processing " +  msg.payload + " from " + name + "...")
+
+	midifile = name + "next.mid"
+	commands.getoutput("waon -i ~pi/" + str(msg.payload.decode()) + " -o " + midifile)
+
+	command = "sh command.sh '" + midifile + "'"
+	note = commands.getoutput( command )
+
+	os.system( "python module.py '" + name + "' '" + note + "'" )
 
 client = mqtt.Client()
 client.on_message = on_message
 
 client.connect(BROKER, PORT, 60)
-client.subscribe("pi1/newfile", qos=QOS)
-client.subscribe("pi2/newfile", qos=QOS)
+print( "Subscribing to " )
+for x in range(1,len(sys.argv)):
+	print(sys.argv[x])
+	client.subscribe(sys.argv[x] + "/newfile", qos=QOS)
 client.loop_start()
+print( "..." )
 
 try:
 	while True:

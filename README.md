@@ -40,7 +40,7 @@ Go to system preferences, sharing, enable remote login, allow access for All Use
 To run the server:
 
 ```sh
-python primary.py
+python primary.py pi1 pi2
 ```
 
 ## Client
