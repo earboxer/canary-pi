@@ -24,8 +24,7 @@ def on_message(client, data, msg):
 		os.system("sh command.sh")
 		file = open("output.txt")
 		note = file.readline()
-		print(note)
-		client.publish("pi1/queue", note)
+		os.system( "python module.py pi1 " + note )
 	elif msg.topic == "pi2/newfile":
 		print("Received message: File = ", msg.payload)
 		print("Converting from .wav to .mid: ")
@@ -33,8 +32,7 @@ def on_message(client, data, msg):
 		os.system("sh command.sh")
 		file = open("output.txt")
 		note = file.readline()
-		print(note)
-		client.publish("pi2/queue", note)
+		os.system( "python module.py pi2 " + note )
 
 client = mqtt.Client()
 client.on_message = on_message
