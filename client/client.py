@@ -27,7 +27,8 @@ def on_connect(client, userdata, rc, *extra_params):
 def on_message(client, data, msg):
     if msg.topic == sys.argv[1] + "/queue":
         print("Received message: Note = ", int(msg.payload))
-        os.system('sonic_pi play ' + int(msg.payload))
+        if (int(msg.payload) > 40):
+            os.system('sonic_pi play ' + str(int(msg.payload)), 'sustain: 2')
 
 client = mqtt.Client()
 client.on_connect = on_connect
@@ -42,10 +43,12 @@ client.loop_start()
 try:
     while True:
     # add a duration or stop this at some point
-	wavname = int(round(time.time())) + sys.argv[1] + ".wav"
-    os.system('arecord --device=hw:1,0 --format S16_LE --rate 48000 -c1 -d 3 test.wav')
-	os.system('scp test.wav pi@' + sys.argv[2] + ':~/' + wavname)
-    client.publish(sys.argv[1] + "/newfile", wavname)
+        # Modulo so it will overwrite old files
+        wavname = str(int(time.time() * 10)%100) + sys.argv[1] + ".wav"
+        os.system('arecord --device=hw:1,0 --format S16_LE --rate 48000 -c1 -d 1 test.wav')
+        os.system('scp test.wav pi@' + sys.argv[2] + ':~/' + wavname)
+        client.publish(sys.argv[1] + "/newfile", wavname)
+	time.sleep(.1)
 except KeyboardInterrupt:
     print('Done')
     client.disconnect()
