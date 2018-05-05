@@ -42,11 +42,12 @@ client.loop_start()
 try:
     while True:
     # add a duration or stop this at some point
-        wavname = str(int(round(time.time()))) + sys.argv[1] + ".wav"
-        os.system('arecord --device=hw:1,0 --format S16_LE --rate 48000 -c1 -d 3 test.wav')
+        # Modulo so it will overwrite old files
+        wavname = str(int(time.time() * 10)%100) + sys.argv[1] + ".wav"
+        os.system('arecord --device=hw:1,0 --format S16_LE --rate 48000 -c1 -d 1 test.wav')
         os.system('scp test.wav pi@' + sys.argv[2] + ':~/' + wavname)
         client.publish(sys.argv[1] + "/newfile", wavname)
-	time.sleep(.5)
+	time.sleep(.1)
 except KeyboardInterrupt:
     print('Done')
     client.disconnect()
